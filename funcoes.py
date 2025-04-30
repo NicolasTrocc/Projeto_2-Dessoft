@@ -41,3 +41,30 @@ def calcula_pontos_soma(numeros):
         soma += numeros[i]
 
     return soma
+
+def calcula_pontos_sequencia_baixa(numeros):
+    pontos = 0
+    #Deixa a lista crescente
+    lista = []
+    maxi = 0
+    for i in range(len(numeros)):
+        if numeros[i]>maxi:
+            maxi = numeros[i]
+    for i in range(len(numeros)):
+        menor = maxi
+        for p in range(len(numeros)):
+            if numeros[p]<menor:
+                menor = numeros[p]
+                indice = p
+        del numeros[indice]
+        if menor not in lista:
+            lista.append(menor)
+    #verifica se tem sequencia
+    sequencia = 1
+    for v in range(len(lista)-1):
+        if lista[v+1] == lista[v]+1:
+            sequencia +=1
+    if sequencia >= 4:
+        pontos = 15
+
+    return pontos
