@@ -15,3 +15,10 @@ def guardar_dado(dados_rolados, dados_guardados, vai_guardar):
     del dados_rolados[vai_guardar]
     lista = [dados_rolados, dados_novos]
     return lista
+
+def remover_dado(dados_rolados,dados_guardados, vai_sair):
+    lista = []
+    dados_rolados.append(dados_guardados[vai_sair])
+    del dados_guardados[vai_sair]
+    lista = [dados_rolados, dados_guardados]
+    return lista
