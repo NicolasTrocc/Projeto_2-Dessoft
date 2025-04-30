@@ -53,7 +53,7 @@ def calcula_pontos_sequencia_baixa(numeros):
     for i in range(len(numeros)):
         menor = maxi
         for p in range(len(numeros)):
-            if numeros[p]<menor:
+            if numeros[p]<=menor:
                 menor = numeros[p]
                 indice = p
         del numeros[indice]
@@ -63,8 +63,9 @@ def calcula_pontos_sequencia_baixa(numeros):
     sequencia = 1
     for v in range(len(lista)-1):
         if lista[v+1] == lista[v]+1:
-            sequencia +=1
+            sequencia += 1
+        else:
+            break
     if sequencia >= 4:
         pontos = 15
-
     return pontos
