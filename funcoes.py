@@ -6,3 +6,12 @@ def rolar_dados(n):
         numero = random.randint(1,6)
         dados[v] = (numero)
     return dados
+
+def guardar_dado(dados_rolados, dados_guardados, vai_guardar):
+    dados_novos = []
+    for i in range(len(dados_guardados)):
+        dados_novos.append(dados_guardados[i])
+    dados_novos.append(dados_rolados[vai_guardar])
+    del dados_rolados[vai_guardar]
+    lista = [dados_rolados, dados_novos]
+    return lista
