@@ -127,3 +127,16 @@ def calcula_pontos_quadra(numeros):
             break
 
     return soma
+
+def calcula_pontos_quina(numeros):
+    dicio = {}
+    for i in numeros:
+        if i in dicio:
+            dicio[i] += 1
+        else:
+            dicio[i] = 1
+    sim = 0
+    for a in dicio.values():
+        if a >= 5:
+            sim = 50
+    return sim
