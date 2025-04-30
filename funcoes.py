@@ -34,3 +34,10 @@ def calcula_pontos_regra_simples(numeros):
         dicio[numeros[p]] += numeros[p]
 
     return dicio
+
+def calcula_pontos_soma(numeros):
+    soma = 0
+    for i in range(len(numeros)):
+        soma += numeros[i]
+
+    return soma
