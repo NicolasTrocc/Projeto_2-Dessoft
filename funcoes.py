@@ -97,3 +97,16 @@ def calcula_pontos_sequencia_alta(numeros):
     if sequencia >= 5:
         pontos = 30
     return pontos
+
+def calcula_pontos_full_house(numeros):
+    soma = 0
+    dicio = {}
+    for i in numeros:
+        if i in dicio:
+            dicio[i] += 1
+        else:
+            dicio[i] = 1
+    if 3 in dicio.values() and 2 in dicio.values():
+        for i in numeros:
+            soma += i
+    return soma
