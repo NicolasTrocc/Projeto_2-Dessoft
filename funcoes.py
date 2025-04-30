@@ -110,3 +110,20 @@ def calcula_pontos_full_house(numeros):
         for i in numeros:
             soma += i
     return soma
+
+def calcula_pontos_quadra(numeros):
+    soma = 0
+    dicio = {}
+    for i in numeros:
+        if i in dicio:
+            dicio[i] += 1
+        else:
+            dicio[i] = 1
+    
+    for a in dicio.values():
+        if a >= 4:
+            for l in numeros:
+                soma += l
+            break
+
+    return soma
