@@ -1,4 +1,3 @@
-
 def rolar_dados(n):
     import random
     dados = n*[0]
@@ -140,3 +139,22 @@ def calcula_pontos_quina(numeros):
         if a >= 5:
             sim = 50
     return sim
+
+def calcula_pontos_regra_avancada(numeros):
+    
+    cinco_iguais = calcula_pontos_quina(numeros[:])
+    full_house = calcula_pontos_full_house(numeros[:])
+    quadra = calcula_pontos_quadra(numeros[:])
+    sem_combinacao = calcula_pontos_soma(numeros[:])
+    sequencia_alta = calcula_pontos_sequencia_alta(numeros[:])
+    sequencia_baixa = calcula_pontos_sequencia_baixa(numeros[:])
+    
+    terminal = {
+    'cinco_iguais': cinco_iguais,
+    'full_house': full_house,
+    'quadra':   quadra,
+    'sem_combinacao': sem_combinacao,
+    'sequencia_alta': sequencia_alta,
+    'sequencia_baixa': sequencia_baixa
+    }
+    return terminal
