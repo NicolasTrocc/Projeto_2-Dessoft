@@ -159,17 +159,18 @@ def calcula_pontos_regra_avancada(numeros):
     }
     return terminal
 
-def faz_jogada(dados, categoria, cartela_de_pontos):
+def faz_jogada(dados, categoria, cartela):
 
-    if categoria == "1" or categoria == "2" or categoria == "3" or categoria == "4" or categoria == "5" or categoria == "6":
-        categoria_int = int(categoria)
+    if categoria == 1 or categoria == 2 or categoria == 3 or categoria == 4 or categoria == 5 or categoria == 6:
         pontos_simples = calcula_pontos_regra_simples(dados)
-        cartela_de_pontos["regra_simples"][categoria_int] = pontos_simples[categoria_int]
+        cartela["regra_simples"][categoria] = pontos_simples[categoria]
+        print(pontos_simples)
     else:
         pontos_avancados = calcula_pontos_regra_avancada(dados)
-        cartela_de_pontos["regra_avancada"][categoria] = pontos_avancados[categoria]
+        cartela["regra_avancada"][categoria] = pontos_avancados[categoria]
+        print(pontos_avancados)
     
-    return cartela_de_pontos
+    return cartela
 
 def imprime_cartela(cartela):
     print("Cartela de Pontos:")
@@ -187,4 +188,5 @@ def imprime_cartela(cartela):
         else:
             print(f"| {i}: {filler}|    |")
     print("-"*25)
+
 
