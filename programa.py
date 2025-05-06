@@ -22,9 +22,9 @@ regra_simples = ['1', '2', '3', '4', '5', '6']
 regra_avancada = ['sem_combinacao', 'quadra', 'full_house', 'sequencia_baixa', 'sequencia_alta', 'cinco_iguais']
 comandos = ['0', '1', '2', '3', '4']
 
-jogada = 0                  
+jogada = 0 #começa a contar
 while jogada < 12:
-    dados_rolados = rolar_dados(5)   
+    dados_rolados = rolar_dados(5)  #primeira rolagem
     dados_guardados = []
     rerroladas = 0
 

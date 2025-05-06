@@ -1,192 +1,98 @@
-def rolar_dados(n):
-    import random
-    dados = n*[0]
-    for v in range(n):
-        numero = random.randint(1,6)
-        dados[v] = (numero)
-    return dados
 
-def guardar_dado(dados_rolados, dados_guardados, vai_guardar):
-    dados_novos = []
-    for i in range(len(dados_guardados)):
-        dados_novos.append(dados_guardados[i])
-    dados_novos.append(dados_rolados[vai_guardar])
-    del dados_rolados[vai_guardar]
-    lista = [dados_rolados, dados_novos]
-    return lista
+import funcoes 
+cartela = {
+    'regra_simples': {
+        1: -1,
+        2: -1,
+        3: -1,
+        4: -1,
+        5: -1,
+        6: -1
+    },
+    'regra_avancada': {
+        'sem_combinacao': -1,
+        'quadra': -1,
+        'full_house': -1,
+        'sequencia_baixa': -1,
+        'sequencia_alta': -1,
+        'cinco_iguais': -1   }         }               #cria uma cartela vazia
+funcoes.imprime_cartela(cartela)
 
-def remover_dado(dados_rolados,dados_guardados, vai_sair):
-    lista = []
-    dados_rolados.append(dados_guardados[vai_sair])
-    del dados_guardados[vai_sair]
-    lista = [dados_rolados, dados_guardados]
-    return lista
 
-def calcula_pontos_regra_simples(numeros):
-    dicio = {}
-    #monta o dicio
-    for i in range(6):
-        dicio[i+1] = 0
-    #adiciona valores ao dicio
-    
-    for p in range(len(numeros)):
-        dicio[numeros[p]] += numeros[p]
+cats_regra_simples = ['1', '2', '3', '4', '5', '6']
+cats_regra_avan = ['sem_combinacao', 'quadra', 'full_house', 'sequencia_baixa', 'sequencia_alta', 'cinco_iguais']
 
-    return dicio
 
-def calcula_pontos_soma(numeros):
-    soma = 0
-    for i in range(len(numeros)):
-        soma += numeros[i]
-
-    return soma
-
-def calcula_pontos_sequencia_baixa(numeros):
-    pontos = 0
-    #Deixa a lista crescente
-    lista = []
-    maxi = 0
-    for i in range(len(numeros)):
-        if numeros[i]>maxi:
-            maxi = numeros[i]
-    for i in range(len(numeros)):
-        menor = maxi
-        for p in range(len(numeros)):
-            if numeros[p]<=menor:
-                menor = numeros[p]
-                indice = p
-        del numeros[indice]
-        if menor not in lista:
-            lista.append(menor)
-    #verifica se tem sequencia
-    sequencia = 1
-    for v in range(len(lista)-1):
-        if lista[v+1] == lista[v]+1:
-            sequencia += 1
+rodada = 0                  # inicia a contagem de rodadas 
+while rodada < 12:
+    ja_rerrolou = 0
+    dados_rolados = funcoes.rolar_dados(5)          #rolagem inicial 
+    dados_guardados = []
+    rodada_continua = True
+    while rodada_continua:
+        print(f'Dados rolados: {dados_rolados}')
+        print(f'Dados guardados: {dados_guardados}')
+        print("Digite 1 para guardar um dado, 2 para remover um dado, 3 para rerrolar, 4 para ver a cartela ou 0 para marcar a pontuação:")
+        opcao = input()
+        while opcao not in ['0', '1', '2', '3', '4']:
+            print('Opção inválida. Tente novamente.')
+            opcao = input()
         else:
-            break
-    if sequencia >= 4:
-        pontos = 15
-    return pontos
-
-def calcula_pontos_sequencia_alta(numeros):
-    pontos = 0
-    #Deixa a lista crescente
-    lista = []
-    maxi = 0
-    for i in range(len(numeros)):
-        if numeros[i]>maxi:
-            maxi = numeros[i]
-    for i in range(len(numeros)):
-        menor = maxi
-        for p in range(len(numeros)):
-            if numeros[p]<=menor:
-                menor = numeros[p]
-                indice = p
-        del numeros[indice]
-        if menor not in lista:
-            lista.append(menor)
-    #verifica se tem sequencia
-    sequencia = 1
-    for v in range(len(lista)-1):
-        if lista[v+1] == lista[v]+1:
-            sequencia += 1
-        else:
-            break
-    if sequencia >= 5:
-        pontos = 30
-    return pontos
-
-def calcula_pontos_full_house(numeros):
-    soma = 0
-    dicio = {}
-    for i in numeros:
-        if i in dicio:
-            dicio[i] += 1
-        else:
-            dicio[i] = 1
-    if 3 in dicio.values() and 2 in dicio.values():
-        for i in numeros:
-            soma += i
-    return soma
-
-def calcula_pontos_quadra(numeros):
-    soma = 0
-    dicio = {}
-    for i in numeros:
-        if i in dicio:
-            dicio[i] += 1
-        else:
-            dicio[i] = 1
-    
-    for a in dicio.values():
-        if a >= 4:
-            for l in numeros:
-                soma += l
-            break
-
-    return soma
-
-def calcula_pontos_quina(numeros):
-    dicio = {}
-    for i in numeros:
-        if i in dicio:
-            dicio[i] += 1
-        else:
-            dicio[i] = 1
-    sim = 0
-    for a in dicio.values():
-        if a >= 5:
-            sim = 50
-    return sim
-
-def calcula_pontos_regra_avancada(numeros):
-    
-    cinco_iguais = calcula_pontos_quina(numeros[:])
-    full_house = calcula_pontos_full_house(numeros[:])
-    quadra = calcula_pontos_quadra(numeros[:])
-    sem_combinacao = calcula_pontos_soma(numeros[:])
-    sequencia_baixa = calcula_pontos_sequencia_baixa(numeros[:])
-    sequencia_alta = calcula_pontos_sequencia_alta(numeros[:])
-    
-    terminal = {
-    'sem_combinacao': sem_combinacao,
-    'quadra': quadra,
-    'full_house': full_house,
-    'sequencia_baixa': sequencia_baixa,
-    'sequencia_alta': sequencia_alta,
-    'cinco_iguais': cinco_iguais,
-        }
-    return terminal
-
-def faz_jogada(dados, categoria, cartela):
-
-    if categoria == 1 or categoria == 2 or categoria == 3 or categoria == 4 or categoria == 5 or categoria == 6:
-        pontos_simples = calcula_pontos_regra_simples(dados)
-        cartela["regra_simples"][categoria] = pontos_simples[categoria]
-        print(pontos_simples)
-    else:
-        pontos_avancados = calcula_pontos_regra_avancada(dados)
-        cartela["regra_avancada"][categoria] = pontos_avancados[categoria]
-        print(pontos_avancados)
-    
-    return cartela
-
-def imprime_cartela(cartela):
-    print("Cartela de Pontos:")
-    print("-"*25)    
-    for i in range(1, 7):
-        filler = " " * (15 - len(str(i)))
-        if cartela['regra_simples'][i] != -1:
-            print(f"| {i}: {filler}| {cartela['regra_simples'][i]:02} |")
-        else:
-            print(f"| {i}: {filler}|    |")
-    for i in cartela['regra_avancada'].keys():
-        filler = " " * (15 - len(str(i)))
-        if cartela['regra_avancada'][i] != -1:
-            print(f"| {i}: {filler}| {cartela['regra_avancada'][i]:02} |")
-        else:
-            print(f"| {i}: {filler}|    |")
-    print("-"*25)
+            if opcao == '1':                    #programa para guardar o dado
+                print("Digite o índice do dado a ser guardado (0 a 4):")
+                dado_guardar = input()
+                lista_pos_guardar = funcoes.guardar_dado(dados_rolados, dados_guardados, int(dado_guardar))
+                dados_rolados = lista_pos_guardar[0]
+                dados_guardados = lista_pos_guardar[1]
+            elif opcao =='2':             #programa para remover o dado 
+                print("Digite o índice do dado a ser removido (0 a 4):")
+                dado_remover = input()
+                lista_pos_remover = funcoes.remover_dado(dados_rolados, dados_guardados, int(dado_remover))
+                dados_rolados = lista_pos_remover[0]
+                dados_guardados = lista_pos_remover[1]
+            elif opcao == '3':              #programa para rolar de novo (o ja_rerrolou é zerado a cada rodada)
+                if ja_rerrolou >= 2:
+                    print("Você já usou todas as rerrolagens.")
+                else: 
+                    qtd = len(dados_rolados)
+                    dados_rolados = funcoes.rolar_dados(qtd) 
+                    ja_rerrolou += 1
+            elif opcao == '4':             #imprime a cartela
+                funcoes.imprime_cartela(cartela)
+            elif opcao == '0': 
+                dados_totais = dados_guardados + dados_rolados
+                cat_valida = False
+                print("Digite a combinação desejada:")
+                while not cat_valida:
+                    cat = input()
+                    if cat in cats_regra_simples:
+                        num = int(cat)
+                        if cartela['regra_simples'][num] == -1:
+                            cartela = funcoes.faz_jogada(dados_totais, cat, cartela)
+                            cat_valida = True
+                        else:
+                            print("Essa combinação já foi utilizada.")
+                    elif cat in cats_regra_avan:
+                        if cartela['regra_avancada'][cat] == -1:
+                            cartela = funcoes.faz_jogada(dados_totais, cat, cartela)
+                            cat_valida = True
+                        else:
+                            print("Essa combinação já foi utilizada.")
+                    else:
+                        print("Combinação inválida. Tente novamente.")
 
 
+                rodada_continua = False
+    rodada += 1  
+   
+        
+
+funcoes.imprime_cartela(cartela)
+
+total_pontos = sum(p for p in cartela['regra_simples'].values()) + sum(p for p in cartela['regra_avancada'].values())
+
+pontos_simples = sum(p for p in cartela['regra_simples'].values())
+if pontos_simples >= 63:
+    total_pontos += 35
+
+print(f"Pontuação total: {total_pontos}")
