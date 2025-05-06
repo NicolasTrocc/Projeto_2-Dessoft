@@ -146,17 +146,17 @@ def calcula_pontos_regra_avancada(numeros):
     full_house = calcula_pontos_full_house(numeros[:])
     quadra = calcula_pontos_quadra(numeros[:])
     sem_combinacao = calcula_pontos_soma(numeros[:])
-    sequencia_alta = calcula_pontos_sequencia_alta(numeros[:])
     sequencia_baixa = calcula_pontos_sequencia_baixa(numeros[:])
+    sequencia_alta = calcula_pontos_sequencia_alta(numeros[:])
     
     terminal = {
-    'cinco_iguais': cinco_iguais,
-    'full_house': full_house,
-    'quadra':   quadra,
     'sem_combinacao': sem_combinacao,
+    'quadra': quadra,
+    'full_house': full_house,
+    'sequencia_baixa': sequencia_baixa,
     'sequencia_alta': sequencia_alta,
-    'sequencia_baixa': sequencia_baixa
-    }
+    'cinco_iguais': cinco_iguais,
+        }
     return terminal
 
 def faz_jogada(dados, categoria, cartela):
