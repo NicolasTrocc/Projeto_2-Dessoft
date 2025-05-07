@@ -23,9 +23,15 @@ imprime_cartela(cartela)
 regra_simples = ['1', '2', '3', '4', '5', '6']
 regra_avançada = ['sem_combinacao', 'quadra', 'full_house','sequencia_baixa', 'sequencia_alta', 'cinco_iguais']
 
+<<<<<<< HEAD
 jogada = 0
 while jogada < 12:
     dados_rolados = rolar_dados(5)
+=======
+jogada = 0 #começa a contar
+while jogada < 12:
+    dados_rolados = rolar_dados(5)  #primeira rolagem
+>>>>>>> 3dc746109b6eeb1c2cc44b15bcd14de0b024ffd9
     dados_guardados = []
     rerrolagens = 0
     jogando = True
