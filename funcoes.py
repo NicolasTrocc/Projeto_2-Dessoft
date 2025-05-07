@@ -42,60 +42,30 @@ def calcula_pontos_soma(numeros):
     return soma
 
 def calcula_pontos_sequencia_baixa(numeros):
-    pontos = 0
-    #Deixa a lista crescente
-    lista = []
-    maxi = 0
-    for i in range(len(numeros)):
-        if numeros[i]>maxi:
-            maxi = numeros[i]
-    for i in range(len(numeros)):
-        menor = maxi
-        for p in range(len(numeros)):
-            if numeros[p]<=menor:
-                menor = numeros[p]
-                indice = p
-        del numeros[indice]
-        if menor not in lista:
-            lista.append(menor)
-    #verifica se tem sequencia
-    sequencia = 1
-    for v in range(len(lista)-1):
-        if lista[v+1] == lista[v]+1:
-            sequencia += 1
+    lista = sorted(set(numeros))  # remove duplicatas e ordena
+    max_seq = seq = 1
+
+    for i in range(1, len(lista)):
+        if lista[i] == lista[i-1] + 1:
+            seq += 1
+            max_seq = max(max_seq, seq)
         else:
-            break
-    if sequencia >= 4:
-        pontos = 15
-    return pontos
+            seq = 1
+
+    return 15 if max_seq >= 4 else 0
 
 def calcula_pontos_sequencia_alta(numeros):
-    pontos = 0
-    #Deixa a lista crescente
-    lista = []
-    maxi = 0
-    for i in range(len(numeros)):
-        if numeros[i]>maxi:
-            maxi = numeros[i]
-    for i in range(len(numeros)):
-        menor = maxi
-        for p in range(len(numeros)):
-            if numeros[p]<=menor:
-                menor = numeros[p]
-                indice = p
-        del numeros[indice]
-        if menor not in lista:
-            lista.append(menor)
-    #verifica se tem sequencia
-    sequencia = 1
-    for v in range(len(lista)-1):
-        if lista[v+1] == lista[v]+1:
-            sequencia += 1
+    lista = sorted(set(numeros))
+    max_seq = seq = 1
+
+    for i in range(1, len(lista)):
+        if lista[i] == lista[i-1] + 1:
+            seq += 1
+            max_seq = max(max_seq, seq)
         else:
-            break
-    if sequencia >= 5:
-        pontos = 30
-    return pontos
+            seq = 1
+
+    return 30 if max_seq >= 5 else 0
 
 def calcula_pontos_full_house(numeros):
     soma = 0
@@ -161,15 +131,14 @@ def calcula_pontos_regra_avancada(numeros):
 
 def faz_jogada(dados, categoria, cartela):
 
-    if categoria == 1 or categoria == 2 or categoria == 3 or categoria == 4 or categoria == 5 or categoria == 6:
+    if categoria in ['1','2','3','4','5','6']:
+        categoria = int(categoria)
         pontos_simples = calcula_pontos_regra_simples(dados)
         cartela["regra_simples"][categoria] = pontos_simples[categoria]
-        print(pontos_simples)
     else:
         pontos_avancados = calcula_pontos_regra_avancada(dados)
         cartela["regra_avancada"][categoria] = pontos_avancados[categoria]
-        print(pontos_avancados)
-    
+        
     return cartela
 
 def imprime_cartela(cartela):
